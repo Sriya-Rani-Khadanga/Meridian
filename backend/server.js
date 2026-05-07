@@ -1,9 +1,12 @@
 const express = require('express');
+
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const cors = require('cors');
 const morgan = require('morgan');
 const { infer } = require('./openclaw_helper');
+const { getFocusScore, startTelegramBot } = require('./telegram_bot');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,18 +30,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Cognitive Score API
 app.get('/api/cognitive-score', (req, res) => {
-    // Simulate some logic
-    const score = 75 + Math.floor(Math.random() * 10);
-    res.json({
-        score,
-        status: score > 80 ? 'EXCELLENT' : 'GOOD FOCUS',
-        details: {
-            focusDepth: 80 + Math.floor(Math.random() * 10),
-            taskVelocity: 65 + Math.floor(Math.random() * 15),
-            distractionRate: 20 + Math.floor(Math.random() * 10),
-            recoverySpeed: 85 + Math.floor(Math.random() * 10)
-        }
-    });
+    res.json(getFocusScore());
 });
 
 // Narrative Insight API (AI Powered)
@@ -54,7 +46,10 @@ app.get('/api/narrative-insight', async (req, res) => {
         const insight = await infer(prompt);
         res.json({ insight });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to generate insight' });
+        res.json({
+            insight: 'You had a mixed focus day: enough deep work to make progress, but too much context switching to feel clean. Pick one recovery block, close the feeds, and protect the next 25 minutes.',
+            fallback: true
+        });
     }
 });
 
@@ -84,8 +79,19 @@ app.get('/api/mental-snapshot', async (req, res) => {
 
         res.json({ snapshot });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to generate snapshot' });
+        res.json({
+            snapshot: 'You seem to be moving between code, browser research, notes, and chat. Choose the next concrete output and give it one uninterrupted block.',
+            fallback: true
+        });
     }
+});
+
+// Telegram Bot Health API
+app.get('/api/telegram-status', (req, res) => {
+    res.json({
+        configured: Boolean(process.env.TELEGRAM_BOT_TOKEN),
+        mode: process.env.TELEGRAM_BOT_TOKEN ? 'polling' : 'disabled'
+    });
 });
 
 // WhatsApp Deadlines API
@@ -150,3 +156,5 @@ app.listen(PORT, () => {
     --------------------------------------------------
     `);
 });
+
+startTelegramBot({ readDB, writeDB, infer });

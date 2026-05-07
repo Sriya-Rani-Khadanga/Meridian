@@ -1,8 +1,32 @@
 {
   "snapshots": [
     {
+      "timestamp": "2026-05-07T15:31:41.335Z",
+      "apps": [
+        "VS Code",
+        "Chrome",
+        "Notion",
+        "Slack"
+      ],
+      "summary": "It looks like you've been in the zone, jumping between coding in VS Code, researching something in Chrome, and organizing your thoughts in Notion, suggesting you're working on a development project that requires some online investigation and note-taking. You also hopped into Slack, likely to touch base with your team or respond to a message, so it's possible you're collaborating with others on this project or just keeping them updated on your progress."
+    },
+    {
+      "timestamp": "2026-05-07T15:31:26.563Z",
+      "apps": [
+        "VS Code",
+        "Chrome",
+        "Notion",
+        "Slack"
+      ],
+      "summary": "It looks like you've been in the zone, jumping between coding in VS Code, researching something in Chrome, and organizing your thoughts in Notion - it seems like you're making progress on a project that requires both development and note-taking. You also quickly hopped into Slack, probably to collaborate with your team or respond to a message, before getting back to tackling the task at hand, suggesting that you're working on a team project that involves coding, research, and communication."
+    },
+    {
       "timestamp": "2026-05-07T10:00:00Z",
-      "apps": ["VS Code", "Chrome", "Notion"],
+      "apps": [
+        "VS Code",
+        "Chrome",
+        "Notion"
+      ],
       "summary": "Deep work session on the Meridian authentication module and project documentation."
     }
   ],
@@ -26,6 +50,46 @@
     }
   ],
   "telegram_feed": [
+    {
+      "sender": "Meridian Bot",
+      "message": "You've been actively switching between work and organization tools, with VS Code and Slack indicating focus on coding and team communication, while also referencing information in Notion and browsing online in Chrome. In the last 5 minutes, your attention has been divided among these tasks, suggesting you're in a state of multitasking, potentially working on a project that requires both development and collaboration.",
+      "time": "2026-05-07T15:00:42.370Z"
+    },
+    {
+      "sender": "Sriya",
+      "message": "/snapshot",
+      "time": "2026-05-07T15:00:41.630Z"
+    },
+    {
+      "sender": "Meridian Bot",
+      "message": "I heard you. Use /score for the quick read, /snapshot for what you are doing now, or /insight for the daily coaching note.",
+      "time": "2026-05-07T14:55:39.348Z"
+    },
+    {
+      "sender": "Sriya",
+      "message": "Hi who are you",
+      "time": "2026-05-07T14:55:38.667Z"
+    },
+    {
+      "sender": "Meridian Bot",
+      "message": "Your current focus score is 79 (GOOD FOCUS). Focus depth: 89, task velocity: 79, distraction rate: 23.",
+      "time": "2026-05-07T14:55:33.508Z"
+    },
+    {
+      "sender": "Sriya",
+      "message": "/score",
+      "time": "2026-05-07T14:55:32.756Z"
+    },
+    {
+      "sender": "Meridian Bot",
+      "message": "Meridian is awake. Try /score, /snapshot, or /insight.",
+      "time": "2026-05-07T14:55:23.160Z"
+    },
+    {
+      "sender": "Sriya",
+      "message": "/start",
+      "time": "2026-05-07T14:55:22.474Z"
+    },
     {
       "sender": "Anika",
       "message": "Hey Meridian, how's my recovery speed today?",

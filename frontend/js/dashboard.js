@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set interval for live updates
     setInterval(updateCognitiveScore, 30000); // every 30s
+    setInterval(updateTelegramFeed, 5000); // every 5s
 });
 
 // Global functions for buttons
