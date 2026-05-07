@@ -182,6 +182,7 @@
 
     /* ── GRID LAYOUTS ── */
     .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:20px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
     .grid-3-2 { display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:20px; }
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 
@@ -473,7 +474,7 @@
     <div class="greeting">
       <div class="greeting-text">
         <h1>Good Morning, <span>Anika</span> 👋</h1>
-        <p>Your cognitive layer is active. Focus session detected — 45 min deep work streak.</p>
+        <p id="mentalSnapshot">Your cognitive layer is active. Focus session detected — 45 min deep work streak.</p>
       </div>
       <div class="date-badge">
         <strong id="dateStr">Mon, May 5</strong>
@@ -587,11 +588,23 @@
     </div>
 
     <!-- ── ROW 3: ACTIVITY + NUDGES ── -->
-    <div class="grid-2">
-      <!-- Activity Timeline -->
+    <div class="grid-3">
+      <!-- Narrative Insight (AI Powered) -->
       <div class="card" style="animation-delay:0.35s">
+        <div class="card-label"><div class="card-label-dot" style="background:var(--purple);box-shadow:0 0 6px var(--purple)"></div>NARRATIVE INSIGHT — AI COACH</div>
+        <div id="narrativeLoading" style="display:none; font-size:12px; color:var(--text-muted);">
+          <span class="btn-loader" style="display:inline-block; vertical-align:middle; margin-right:8px;"></span> Analyzing patterns...
+        </div>
+        <div id="narrativeText" style="font-size:14px; line-height:1.6; color:var(--text-primary); font-style:italic;">
+          "Your recovery speed is at an all-time high. Great job taking those micro-breaks."
+        </div>
+        <button class="btn-sm purple" style="margin-top:16px;" onclick="refreshInsight()">🔄 Refresh Insight</button>
+      </div>
+
+      <!-- Activity Timeline -->
+      <div class="card" style="animation-delay:0.38s">
         <div class="card-label"><div class="card-label-dot"></div>ACTIVITY TIMELINE</div>
-        <div class="timeline">
+        <div class="timeline" id="activityTimeline">
           <div class="timeline-item">
             <div class="t-dot cyan"></div>
             <div class="t-line"></div>
@@ -610,63 +623,32 @@
             </div>
             <div class="t-time">11:32</div>
           </div>
-          <div class="timeline-item">
-            <div class="t-dot red"></div>
-            <div class="t-line"></div>
-            <div class="t-content">
-              <div class="t-app">Instagram → YouTube</div>
-              <div class="t-desc">Distraction loop started · Loop score: 62</div>
-            </div>
-            <div class="t-time">12:05</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot green"></div>
-            <div class="t-line"></div>
-            <div class="t-content">
-              <div class="t-app">Meridian Nudge — Break Suggested</div>
-              <div class="t-desc">Returned to VS Code after 8 min recovery</div>
-            </div>
-            <div class="t-time">12:18</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot cyan"></div>
-            <div class="t-content">
-              <div class="t-app">GitHub — PR #47 Pushed</div>
-              <div class="t-desc">Commit: fix(auth): token expiry edge case</div>
-            </div>
-            <div class="t-time">13:10</div>
-          </div>
         </div>
+        <button class="btn-sm cyan" style="margin-top:16px;" onclick="simulateDistraction()">⚠️ Simulate Loop</button>
       </div>
 
-      <!-- Smart Nudges -->
-      <div class="card" style="animation-delay:0.4s">
-        <div class="card-label"><div class="card-label-dot"></div>SMART NUDGES <span class="tag tag-red" style="margin-left:6px;">3 ACTIVE</span></div>
-        <div class="nudge-list" id="nudgeList">
-          <div class="nudge">
-            <div class="nudge-icon">⏱️</div>
+      <!-- Telegram Bot Feed (Live) -->
+      <div class="card" style="animation-delay:0.41s">
+        <div class="card-label"><div class="card-label-dot" style="background:#24A1DE;box-shadow:0 0 6px #24A1DE"></div>LIVE TELEGRAM FEED</div>
+        <div id="telegramFeed" class="nudge-list">
+          <!-- Feed items will be loaded here -->
+          <div class="nudge" style="background:transparent; padding:0; border:none; margin-bottom:12px;">
+            <div class="nudge-icon" style="background:rgba(36,161,222,0.1); color:#24A1DE;">👤</div>
             <div>
-              <div class="nudge-text">You've been in deep flow for 45 min. Consider a 5-minute break to maintain peak performance.</div>
-              <div class="nudge-time">2 min ago</div>
+              <div class="nudge-text" style="font-size:12px; color:var(--text-muted);">Anika: <span style="color:var(--text-primary)">Hey Meridian, how's my recovery?</span></div>
+              <div class="nudge-time">12:05 PM</div>
             </div>
-            <button class="nudge-dismiss" onclick="dismissNudge(this)">×</button>
           </div>
-          <div class="nudge">
-            <div class="nudge-icon">📅</div>
+          <div class="nudge" style="background:transparent; padding:0; border:none;">
+            <div class="nudge-icon" style="background:rgba(36,161,222,0.1); color:#24A1DE;">🤖</div>
             <div>
-              <div class="nudge-text">Deadline detected in WhatsApp: <strong>"submit by Friday"</strong> — Added to Calendar.</div>
-              <div class="nudge-time">31 min ago</div>
+              <div class="nudge-text" style="font-size:12px; color:var(--text-muted);">Bot: <span style="color:var(--text-primary)">Recovery high! Your break worked perfectly.</span></div>
+              <div class="nudge-time">12:06 PM</div>
             </div>
-            <button class="nudge-dismiss" onclick="dismissNudge(this)">×</button>
           </div>
-          <div class="nudge">
-            <div class="nudge-icon">📺</div>
-            <div>
-              <div class="nudge-text">TV in living room has been on for 3h 20m. Turn it off remotely?</div>
-              <div class="nudge-time">1 hr ago</div>
-            </div>
-            <button class="nudge-dismiss" onclick="dismissNudge(this)">×</button>
-          </div>
+        </div>
+        <div style="margin-top:16px; font-size:10px; color:var(--text-muted); display:flex; align-items:center; gap:6px;">
+          <div class="pulse-dot" style="width:6px; height:6px;"></div> Monitoring @meridian_bot
         </div>
       </div>
     </div>
@@ -763,6 +745,8 @@
   .btn-sm.cyan:hover { background:var(--cyan); color:#040812; }
   .btn-sm.ghost { background:transparent; border-color:var(--border); color:var(--text-muted); }
   .btn-sm.ghost:hover { border-color:var(--green); color:var(--green); }
+  .btn-sm.purple { background:var(--purple-dim); border-color:var(--purple); color:#a78bfa; }
+  .btn-sm.purple:hover { background:var(--purple); color:#fff; }
 </style>
 
 <script>
@@ -913,6 +897,16 @@
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 </script>
+<!-- Friction / Delay Screen Overlay -->
+<div id="frictionScreen" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(4,8,18,0.98); z-index:9999; flex-direction:column; align-items:center; justify-content:center; text-align:center; backdrop-filter:blur(20px);">
+  <div style="font-size:120px; font-weight:900; color:var(--cyan); text-shadow:0 0 30px rgba(0,212,255,0.4);" id="frictionTimer">5</div>
+  <h2 style="margin:20px 0; letter-spacing:2px; font-weight:800; color:#fff;">TAKE A BREATH</h2>
+  <p style="color:var(--text-muted); max-width:400px; line-height:1.6; margin:0 auto;">You've opened <strong>Instagram</strong> 3 times in the last 15 minutes. Is this where you want to spend your attention?</p>
+  <div style="margin-top:40px; width:200px; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin-left:auto; margin-right:auto;">
+    <div id="frictionBar" style="width:100%; height:100%; background:var(--cyan); transition:width 5s linear;"></div>
+  </div>
+</div>
+
 <script src="js/app.js"></script>
 </body>
 </html>

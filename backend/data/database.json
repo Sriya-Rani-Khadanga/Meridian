@@ -1,0 +1,50 @@
+{
+  "snapshots": [
+    {
+      "timestamp": "2026-05-07T10:00:00Z",
+      "apps": ["VS Code", "Chrome", "Notion"],
+      "summary": "Deep work session on the Meridian authentication module and project documentation."
+    }
+  ],
+  "whatsapp_deadlines": [
+    {
+      "chat": "Team Sam is Singing",
+      "message": "Guys, remember we need to submit the APK by May 8th!",
+      "deadline": "2026-05-08T23:00:00Z"
+    },
+    {
+      "chat": "Ridhi (Work)",
+      "message": "I'll finish the Ktor routes by 4 PM today.",
+      "deadline": "2026-05-07T16:00:00Z"
+    }
+  ],
+  "github_events": [
+    {
+      "repo": "meridian-ai",
+      "commit": "feat(ai): integrate openclaw inference helper",
+      "time": "20m ago"
+    }
+  ],
+  "telegram_feed": [
+    {
+      "sender": "Anika",
+      "message": "Hey Meridian, how's my recovery speed today?",
+      "time": "12:05 PM"
+    },
+    {
+      "sender": "Meridian Bot",
+      "message": "Recovery high! Your 8-minute break after that VS Code sprint worked perfectly. Score: 82.",
+      "time": "12:06 PM"
+    },
+    {
+      "sender": "Anika",
+      "message": "Ghost Mode ON.",
+      "time": "12:45 PM"
+    },
+    {
+      "sender": "Meridian Bot",
+      "message": "🔒 Ghost Layer ACTIVE. Documents and sensitive browser tabs are now redacted from context.",
+      "time": "12:45 PM"
+    }
+  ]
+}
