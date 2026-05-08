@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-async function infer(prompt) {
+async function infer(prompt, options = {}) {
   if (!process.env.GROQ_API_KEY) {
     throw new Error('GROQ_API_KEY is not configured');
   }
@@ -14,7 +14,10 @@ async function infer(prompt) {
     },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'user', content: prompt }],
+      messages: [
+        ...(options.system ? [{ role: 'system', content: options.system }] : []),
+        { role: 'user', content: prompt }
+      ],
       max_tokens: 150,
       temperature: 0.7
     })
